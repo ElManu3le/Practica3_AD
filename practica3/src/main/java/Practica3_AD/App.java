@@ -1,13 +1,13 @@
 package Practica3_AD;
 
-/**
- * Hello world!
- *
- */
+import org.neodatis.odb.ODB;
+import org.neodatis.odb.ODBFactory;
+
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        ODB odb = ODBFactory.open("test.neodatis");
+        
     }
 }

@@ -25,6 +25,19 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.18</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.neodatis.odb</groupId>
+      <artifactId>neodatis-odb</artifactId>
+      <version>1.9.30.687</version>
+    </dependency>
+
   </dependencies>
 
   <build>
