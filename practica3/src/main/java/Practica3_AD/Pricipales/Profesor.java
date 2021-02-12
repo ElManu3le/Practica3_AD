@@ -17,10 +17,12 @@ public class Profesor {
     public Date nacimento_profesor;
     public ArrayList<Asignatura> materias;
 
+    /* Contructor vacio de la clase Profesor*/
     public Profesor() {
 
     }
 
+    /* Contructor inicializado con las atributos establecidos de la clase Profesor*/
     public Profesor(int codigo_profesor, String nombre_profesor, String apellidos_profesor, String sexo,
             Date nacimento_profesor, ArrayList<Asignatura> materias) {
         this.codigo_profesor = codigo_profesor;
@@ -28,7 +30,8 @@ public class Profesor {
         this.apellidos_profesor = apellidos_profesor;
         this.sexo = sexo;
         this.nacimento_profesor = nacimento_profesor;
-        this.materias = materias;
+        //Inicializa una nueva variable de materias, que a su vez es un ArryList de la clase Asignatura
+        this.materias =  new ArrayList<Asignatura>();
     }
 
     @Override
@@ -37,9 +40,5 @@ public class Profesor {
                 + ", materias=" + materias + ", nacimento_profesor=" + nacimento_profesor + ", nombre_profesor="
                 + nombre_profesor + ", sexo=" + sexo + "]";
     }
-
-    
-
-    
 
 }
