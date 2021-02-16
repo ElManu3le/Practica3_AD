@@ -15,22 +15,21 @@ public class Asignatura {
 
     public Asignatura() {
 
+        this.asignaProfesors = new ArrayList<AsigProfesor>();
+
     }
 
-    public Asignatura(int codigo_asignatura, String nombre_asignatura, ArrayList<AsigProfesor> asignaProfesors) {
+    public Asignatura(int codigo_asignatura, String nombre_asignatura) {
         this.codigo_asignatura = codigo_asignatura;
         this.nombre_asignatura = nombre_asignatura;
-        this.asignaProfesors = asignaProfesors;
+        this.asignaProfesors = new ArrayList<AsigProfesor>();
     }
 
     @Override
     public String toString() {
-        return "Asignatura [asignaProfesors=" + asignaProfesors + ", codigo_asignatura=" + codigo_asignatura
-                + ", nombre_asignatura=" + nombre_asignatura + "]";
+        return "Asignatura [asignaProfesors=" + asignaProfesors 
+        + ", codigo_asignatura=" + codigo_asignatura
+        + ", nombre_asignatura=" + nombre_asignatura + "]";
     }
-
-    
-
-    
 
 }
