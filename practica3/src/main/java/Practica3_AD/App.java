@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import Practica3_AD.Leer;
 
 import org.neodatis.odb.*;
-import org.neodatis.odb.ODBFactory;
 
 import Practica3_AD.Pricipales.Asignatura;
 import Practica3_AD.Pricipales.Centro;
@@ -16,15 +15,21 @@ public class App {
     private static ArrayList<Profesor> profesores;
     private static ArrayList<Asignatura> materias;
     private static Date nacimento_profesor;
+    public static int opcion;
 
     public static void main(String[] args) {
-        int opcion;
+
         try {
 
             ODB odb = ODBFactory.open("test.neodatis");
+            Objects<Centro> EducCentros;
+            Objects<Profesor> centProfesors;
+
+            Centro centros = new Centro(6, "Ies avempace", "Ignacio", "avenida de los pirineos", "Zalfonada",
+                    "Zaragoza");
+            Profesor docentes = new Profesor(10, "prueba", "prueba apellido", "hombre", nacimento_profesor);
 
             do {
-
                 System.out.println("\n****Menu Interactivo****");
 
                 System.out.println("1. Mostrar todos los centros disponibles");
@@ -45,44 +50,66 @@ public class App {
 
                 try {
                     System.out.print("opcion a realizar \t");
-                    opcion = Leer.pedirEnteroValidar();
+
+                    switch (opcion = Leer.pedirEnteroValidar()) {
+                        case 1:
+
+                            odb.store(centros);
+                            odb.store(docentes);
+
+                            break;
+
+                        case 2:
+                            EducCentros = odb.getObjects(Centro.class);
+                            
+                            centProfesors = odb.getObjects(Profesor.class);
+
+                            System.out.println(centros);
+                            System.out.println(docentes);
+
+                            System.out.println(EducCentros);
+                            System.out.println(centProfesors);
+
+                            break;
+
+                        case 3:
+
+                            odb.store(centros);
+                            odb.store(docentes);
+
+                            System.out.println(centros);
+                            System.out.println(docentes.getMaterias());
+
+                            break;
+
+                        case 4:
+
+                            odb.delete(centros);
+                            System.out.println(centros);
+                        
+
+                            break;
+
+                        case 5:
+
+                            break;
+
+                        case 6:
+
+                            odb.close();
+
+                            break;
+
+                        default:
+                            break;
+                    }
+
                 } catch (Exception e) {
-                    System.out.println("Mal!!!");
+                    System.err.println("Problema de esto es => " + e.getMessage());
                 }
 
-            } while ((opcion = Leer.pedirEnteroValidar()) != 0);
+            } while (opcion != 0);
 
-            switch (opcion = Leer.pedirEnteroValidar()) {
-                case 1:
-
-                    break;
-
-                case 2:
-
-                    break;
-
-                case 3:
-                    break;
-
-                case 4:
-
-                    break;
-
-                case 5:
-
-                    break;
-
-                case 6:
-
-                   
-
-                    break;
-
-                default:
-                    break;
-            }
-
-            odb.close();
         } catch (Exception e) {
             System.err.println("Problema al conectar maño" + e.getMessage());
         }
