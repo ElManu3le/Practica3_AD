@@ -1,10 +1,10 @@
 package Practica3_AD;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import Practica3_AD.Leer;
 
-import org.neodatis.odb.*;
+import org.neodatis.odb.ODB;
+import org.neodatis.odb.ODBFactory;
+import org.neodatis.odb.Objects;
 
 import Practica3_AD.Pricipales.Asignatura;
 import Practica3_AD.Pricipales.Centro;
@@ -12,9 +12,6 @@ import Practica3_AD.Pricipales.Profesor;
 
 public class App {
 
-    private static ArrayList<Profesor> profesores;
-    private static ArrayList<Asignatura> materias;
-    private static Date nacimento_profesor;
     public static int opcion;
 
     public static void main(String[] args) {
@@ -22,29 +19,44 @@ public class App {
         try {
 
             ODB odb = ODBFactory.open("test.neodatis");
-            Objects<Centro> EducCentros;
-            Objects<Profesor> centProfesors;
+            Objects<Centro> educCentros;
+            Objects<Profesor> profesores;
+            Objects<Asignatura> profMaterias;
 
-            Centro centros = new Centro(6, "Ies avempace", "Ignacio", "avenida de los pirineos", "Zalfonada",
-                    "Zaragoza");
-            Profesor docentes = new Profesor(10, "prueba", "prueba apellido", "hombre", nacimento_profesor);
+            Centro centros = new Centro(2, "Ies avempace", "Ignacio", "avenida de los pirineos", "Zalfonada", "Zaragoza");
+            Centro centros1 = new Centro(3, "IES ITACA", "MARCOS ", "CALLE MAYOR DE LOS CABALLEROS", "SANTA ISABEL", "ZARAGOZA");
+            Centro centros2 = new Centro(4, "COLEGIO MIXTO Nº8", "JULIAN VAQUERIZO", "PLAZA DEL PILAR", "AZUCARERA", "MADRID");
+
+            Profesor docentes = new Profesor(11, "IGNACIO", "LACOSTE", "M", "1/04/1994");
+            Profesor docentes1 = new Profesor(12, "MARCOS", "RUIZ", "M", "1/04/1970");
+            Profesor docentes2 = new Profesor(20, "JULIAN", "VAQUERIZO", "M", "1/04/1965");
+
+            Asignatura materias1 = new Asignatura(1, "PSP");
+            Asignatura materias2 = new Asignatura(2, "AD");
+            Asignatura materias3 = new Asignatura(3, "IEI");
+            Asignatura materias4 = new Asignatura(4, "SGE");
+            Asignatura materias5 = new Asignatura(5, "PROGRAMACION");
+            Asignatura materias6 = new Asignatura(6, "INGLES");
+            Asignatura materias7 = new Asignatura(7, "DESARROLLO DE INTERFACE");
+            Asignatura materias8 = new Asignatura(8, "DEPORTE");
+
 
             do {
                 System.out.println("\n****Menu Interactivo****");
 
-                System.out.println("1. Mostrar todos los centros disponibles");
+                System.out.println("1. Añadir los datos a la BD");
 
-                System.out.println("2. Mostrar a los profesores de un centro, Cual ? ");
+                System.out.println("2. Listar todos los centros");
 
-                System.out.println(
-                        "3. Listar todos los profesores de un centro cuya fecha de nacimiento sea anterior a 1993s ");
+                System.out.println("3. Listar a todos los profesores ");
 
-                System.out.println(
-                        "4. Listar los profesores con sexo masculino que impartan la asignatura de “Acceso a datos”.");
+                System.out.println("4. Listar a todos los profesores de un centro");
 
-                System.out.println("5. Comprobar que un profesor ya existe.");
+                System.out.println("5. Listar a todos los profesores de un centro cuya fechade nacimientos dea interior a 1993");
 
-                System.out.println("6. Para salir del programa");
+                System.out.println("6. Listar los profesores con sexo masculino que impartan la asignatura de “Acceso a datos”.");
+
+                System.out.println("7. Comprobar si un profesor ya existe.");
 
                 System.out.println("************************************");
 
@@ -53,50 +65,95 @@ public class App {
 
                     switch (opcion = Leer.pedirEnteroValidar()) {
                         case 1:
+                        //Añadir los datos a la BD
 
                             odb.store(centros);
+                            odb.store(centros1);
+                            odb.store(centros2);
+                            
                             odb.store(docentes);
+                            odb.store(docentes1);
+                            odb.store(docentes2);
+
+                            odb.store(materias1);
+                            odb.store(materias2);
+                            odb.store(materias3);
+                            odb.store(materias4);
+                            odb.store(materias5);
+                            odb.store(materias6);
+                            odb.store(materias7);
+                            odb.store(materias8);
+
 
                             break;
 
                         case 2:
-                            EducCentros = odb.getObjects(Centro.class);
-                            
-                            centProfesors = odb.getObjects(Profesor.class);
-
-                            System.out.println(centros);
-                            System.out.println(docentes);
-
-                            System.out.println(EducCentros);
-                            System.out.println(centProfesors);
+                        //Listar todos los centros
+                            educCentros = odb.getObjects(Centro.class);
+                            System.out.println(educCentros);
 
                             break;
 
                         case 3:
+                        //Listar a todos los profesores 
+                            profesores = odb.getObjects(Profesor.class);
+                            System.out.println(profesores);
 
-                            odb.store(centros);
-                            odb.store(docentes);
-
-                            System.out.println(centros);
-                            System.out.println(docentes.getMaterias());
+                            
 
                             break;
 
                         case 4:
+                        //Listar a todos los profesores de un centro
+                            
+                        profesores = odb.getObjects(Profesor.class);
+                        educCentros = odb.getObjects(Centro.class);
+                        String centro = Leer.pedirCadena();
+                            //educCentros = odb.getObjects(new CriteriaQuery(Centro.class,Where.equal("nombre", centro)));
 
-                            odb.delete(centros);
-                            System.out.println(centros);
-                        
+                            if (educCentros.isEmpty()) {
+                                System.out.println("Lo siento, no hay");
+                                
+                            } 
+                            for (Profesor prof : profesores) {
+                                for (Centro centrete : educCentros) {
+                                    if (centrete.getNombre_centro().equals(centro)) {
+                                        System.out.println(prof);
+                                        
+                                    }
+                                    
+                                }
+                                
+                            }
 
                             break;
 
                         case 5:
+                        //Listar a todos los profesores de un centro cuya fechade nacimientos dea interior a 1993
+                        profesores = odb.getObjects(Profesor.class);
+                        educCentros = odb.getObjects(Centro.class);
+
+                        if (profesores.isEmpty()) {
+                            System.out.println("Lo siento, no hay");
+                            
+                        } 
+                        for (Profesor prof : profesores) {
+                            String facha = prof.getNacimento_profesor();
+                            int anyo = Integer.parseInt(facha.substring(5,9));
+                            if(anyo<=1993)
+                            {
+                                System.out.println(prof);
+                            }
+                            
+                            
+                        }
 
                             break;
 
                         case 6:
+                        //Listar los profesores con sexo masculino que impartan la asignatura de “Acceso a datos”.
 
-                            odb.close();
+                            
 
                             break;
 
@@ -114,19 +171,10 @@ public class App {
             System.err.println("Problema al conectar maño" + e.getMessage());
         }
 
-        /*
-         * Centro centros = new Centro(1, "Ies avempace", "nacho vidal",
-         * "direccion_centro", "localidad_centro", "provincia_centro"); Profesor
-         * docentes = new Profesor(11, "nombre_profesor", "apellidos_profesor", "sexo",
-         * nacimento_profesor);
-         * 
-         * odb.store(centros); odb.store(docentes);
-         * 
-         * Objects<Centro> EducCentros = odb.getObjects(Centro.class); Objects<Profesor>
-         * centProfesors = odb.getObjects(Profesor.class);
-         * 
-         * System.out.println(EducCentros); System.out.println(centProfesors);
-         */
+        
+
+
+
 
     }
 }
