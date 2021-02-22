@@ -5,6 +5,9 @@ import java.sql.Date;
 import org.neodatis.odb.ODB;
 import org.neodatis.odb.ODBFactory;
 import org.neodatis.odb.Objects;
+import org.neodatis.odb.core.query.IQuery;
+import org.neodatis.odb.core.query.criteria.Where;
+import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 
 import Practica3_AD.Pricipales.Asignatura;
 import Practica3_AD.Pricipales.Centro;
@@ -19,12 +22,6 @@ public class App {
         ODB odb = ODBFactory.open("test.neodatis");
 
         try {
-
-            
-
-            Objects<Centro> educCentros;
-            Objects<Profesor> profesores;
-            Objects<Asignatura> profMaterias;
 
             Centro centros = new Centro(2, "Ies avempace", "Ignacio", "avenida de los pirineos", "Zalfonada", "Zaragoza");
             Centro centros1 = new Centro(3, "IES ITACA", "MARCOS ", "CALLE MAYOR DE LOS CABALLEROS", "SANTA ISABEL", "ZARAGOZA");
@@ -43,6 +40,9 @@ public class App {
             Asignatura materias7 = new Asignatura(7, "DESARROLLO DE INTERFACE");
             Asignatura materias8 = new Asignatura(8, "DEPORTE");
 
+            Objects<Centro> educCentros  ; //Inicializar esto como listas vacias  // = new Objects<Centro>()
+            Objects<Profesor> profesores;
+            Objects<Asignatura> profMaterias;
 
             do {
                 System.out.println("\n****Menu Interactivo****");
@@ -112,27 +112,41 @@ public class App {
                         case 4:
                         //Listar a todos los profesores de un centro
                             
+                       /* 
+                       String s = Leer.pedirCadena();
+                        Objects<Centro> centro = odb.getObjects(new CriteriaQuery(Centro.class, Where.equal("nombre", s)));
+                
+                        if (centro.isEmpty()) {
+                            System.out.println("No hay ningún centro con ese nombre");
+                            return;
+                        }
+                        Centro c = centro.getFirst();
+                        for (Profesor p : c.getProfesores()) {
+                            System.out.println("\n" + p);
+                        }
+                            
+                        }*/
+
                         profesores = odb.getObjects(Profesor.class);
                         educCentros = odb.getObjects(Centro.class);
                         String centro = Leer.pedirCadena();
-                            //educCentros = odb.getObjects(new CriteriaQuery(Centro.class,Where.equal("nombre", centro)));
 
-                            if (educCentros.isEmpty()) {
-                                System.out.println("Lo siento, no hay");
-                                
-                            } 
-                            for (Profesor prof : profesores) {
-                                for (Centro centrete : educCentros) {
-                                    if (centrete.getNombre_centro().equals(centro)) {
-                                        System.out.println(prof);
-                                        
-                                    }
+                        if (educCentros.isEmpty()) {
+                            System.out.println("Lo siento, no hay");
+                            
+                        } 
+                        for (Profesor prof : profesores) {
+                            for (Centro centrete : educCentros) {
+                                if (centrete.getNombre_centro().equals(centro)) {
+                                    System.out.println(prof);
                                     
                                 }
                                 
                             }
 
-                            break;
+                        
+                        }
+                        break;
 
                         case 5:
                         //Listar a todos los profesores de un centro cuya fechade nacimientos dea interior a 1993
