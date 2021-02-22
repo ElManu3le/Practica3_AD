@@ -23,9 +23,9 @@ public class App {
 
         try {
 
-            Centro centros = new Centro(2, "Ies avempace", "Ignacio", "avenida de los pirineos", "Zalfonada", "Zaragoza");
-            Centro centros1 = new Centro(3, "IES ITACA", "MARCOS ", "CALLE MAYOR DE LOS CABALLEROS", "SANTA ISABEL", "ZARAGOZA");
-            Centro centros2 = new Centro(4, "COLEGIO MIXTO Nº8", "JULIAN VAQUERIZO", "PLAZA DEL PILAR", "AZUCARERA", "MADRID");
+            Centro centros = new Centro(2, "Ies avempace", " ", "avenida de los pirineos", "Zalfonada", "Zaragoza");
+            Centro centros1 = new Centro(3, "IES ITACA", " ", "CALLE MAYOR DE LOS CABALLEROS", "SANTA ISABEL", "ZARAGOZA");
+            Centro centros2 = new Centro(4, "COLEGIO MIXTO Nº8", " ", "PLAZA DEL PILAR", "AZUCARERA", "MADRID");
 
             Profesor docentes = new Profesor(11, "IGNACIO", "LACOSTE", "M", "1/04/1990");
             Profesor docentes1 = new Profesor(12, "MARCOS", "RUIZ", "M", "1/04/1970");
@@ -40,7 +40,9 @@ public class App {
             Asignatura materias7 = new Asignatura(7, "DESARROLLO DE INTERFACE");
             Asignatura materias8 = new Asignatura(8, "DEPORTE");
 
-            Objects<Centro> educCentros  ; //Inicializar esto como listas vacias  // = new Objects<Centro>()
+            
+
+            Objects<Centro> educCentros; //Inicializar esto como listas vacias  // = new Objects<Centro>()
             Objects<Profesor> profesores;
             Objects<Asignatura> profMaterias;
 
@@ -112,9 +114,9 @@ public class App {
                         case 4:
                         //Listar a todos los profesores de un centro
                             
-                       /* 
+                       
                        String s = Leer.pedirCadena();
-                        Objects<Centro> centro = odb.getObjects(new CriteriaQuery(Centro.class, Where.equal("nombre", s)));
+                        Objects<Centro> centro = odb.getObjects(new CriteriaQuery(Centro.class, Where.equal("nombre_centro", s)));
                 
                         if (centro.isEmpty()) {
                             System.out.println("No hay ningún centro con ese nombre");
@@ -125,9 +127,9 @@ public class App {
                             System.out.println("\n" + p);
                         }
                             
-                        }*/
+                        
 
-                        profesores = odb.getObjects(Profesor.class);
+                        /*profesores = odb.getObjects(Profesor.class);
                         educCentros = odb.getObjects(Centro.class);
                         String centro = Leer.pedirCadena();
 
@@ -145,7 +147,7 @@ public class App {
                             }
 
                         
-                        }
+                        }*/
                         break;
 
                         case 5:
