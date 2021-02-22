@@ -1,6 +1,10 @@
 package Practica3_AD;
 
+import java.io.File;
+import java.sql.Array;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.neodatis.odb.ODB;
 import org.neodatis.odb.ODBFactory;
@@ -23,10 +27,6 @@ public class App {
 
         try {
 
-            Centro centros = new Centro(2, "Ies avempace", " ", "avenida de los pirineos", "Zalfonada", "Zaragoza");
-            Centro centros1 = new Centro(3, "IES ITACA", " ", "CALLE MAYOR DE LOS CABALLEROS", "SANTA ISABEL", "ZARAGOZA");
-            Centro centros2 = new Centro(4, "COLEGIO MIXTO Nº8", " ", "PLAZA DEL PILAR", "AZUCARERA", "MADRID");
-
             Profesor docentes = new Profesor(11, "IGNACIO", "LACOSTE", "M", "1/04/1990");
             Profesor docentes1 = new Profesor(12, "MARCOS", "RUIZ", "M", "1/04/1970");
             Profesor docentes2 = new Profesor(20, "JULIAN", "VAQUERIZO", "M", "1/04/1965");
@@ -40,9 +40,13 @@ public class App {
             Asignatura materias7 = new Asignatura(7, "DESARROLLO DE INTERFACE");
             Asignatura materias8 = new Asignatura(8, "DEPORTE");
 
-            
+            Centro centros = new Centro(2, "Ies avempace", " ", "avenida de los pirineos", "Zalfonada", "Zaragoza",
+                    Arrays.asList(docentes, docentes1, docentes2));
+            Centro centros1 = new Centro(3, "IES ITACA", " ", "CALLE MAYOR DE LOS CABALLEROS", "SANTA ISABEL",
+                    "ZARAGOZA");
+            Centro centros2 = new Centro(4, "COLEGIO MIXTO Nº8", " ", "PLAZA DEL PILAR", "AZUCARERA", "MADRID");
 
-            Objects<Centro> educCentros; //Inicializar esto como listas vacias  // = new Objects<Centro>()
+            Objects<Centro> educCentros; // Inicializar esto como listas vacias // = new Objects<Centro>()
             Objects<Profesor> profesores;
             Objects<Asignatura> profMaterias;
 
@@ -57,9 +61,11 @@ public class App {
 
                 System.out.println("4. Listar a todos los profesores de un centro");
 
-                System.out.println("5. Listar a todos los profesores de un centro cuya fechade nacimientos dea anterior a 1993");
+                System.out.println(
+                        "5. Listar a todos los profesores de un centro cuya fechade nacimientos dea anterior a 1993");
 
-                System.out.println("6. Listar los profesores con sexo masculino que impartan la asignatura de “Acceso a datos”.");
+                System.out.println(
+                        "6. Listar los profesores con sexo masculino que impartan la asignatura de “Acceso a datos”.");
 
                 System.out.println("7. Comprobar si un profesor ya existe.");
 
@@ -70,14 +76,12 @@ public class App {
 
                     switch (opcion = Leer.pedirEnteroValidar()) {
                         case 1:
-                        //Añadir los datos a la BD
-
-                        
+                            // Añadir los datos a la BD
 
                             odb.store(centros);
                             odb.store(centros1);
                             odb.store(centros2);
-                            
+
                             odb.store(docentes);
                             odb.store(docentes1);
                             odb.store(docentes2);
@@ -91,89 +95,88 @@ public class App {
                             odb.store(materias7);
                             odb.store(materias8);
 
-
-                            
                             break;
 
                         case 2:
-                        //Listar todos los centros
+                            // Listar todos los centros
                             educCentros = odb.getObjects(Centro.class);
                             System.out.println(educCentros);
 
                             break;
 
                         case 3:
-                        //Listar a todos los profesores 
+                            // Listar a todos los profesores
                             profesores = odb.getObjects(Profesor.class);
                             System.out.println(profesores);
 
-                            
+                            /*
+                             * void fun(Profesor p) { tal
+                             * 
+                             * }
+                             * 
+                             * profesores.forEach(this::funcionNico); new ArrayList<Centro>();
+                             */
 
                             break;
 
                         case 4:
-                        //Listar a todos los profesores de un centro
-                            
-                       
-                       String s = Leer.pedirCadena();
-                        Objects<Centro> centro = odb.getObjects(new CriteriaQuery(Centro.class, Where.equal("nombre_centro", s)));
-                
-                        if (centro.isEmpty()) {
-                            System.out.println("No hay ningún centro con ese nombre");
-                            return;
-                        }
-                        Centro c = centro.getFirst();
-                        for (Profesor p : c.getProfesores()) {
-                            System.out.println("\n" + p);
-                        }
-                            
-                        
+                            // Listar a todos los profesores de un centro
 
-                        /*profesores = odb.getObjects(Profesor.class);
-                        educCentros = odb.getObjects(Centro.class);
-                        String centro = Leer.pedirCadena();
+                            String s = Leer.pedirCadena();
+                            Objects<Centro> centro = odb
+                                    .getObjects(new CriteriaQuery(Centro.class, Where.equal("nombre_centro", s)));
 
-                        if (educCentros.isEmpty()) {
-                            System.out.println("Lo siento, no hay");
-                            
-                        } 
-                        for (Profesor prof : profesores) {
-                            for (Centro centrete : educCentros) {
-                                if (centrete.getNombre_centro().equals(centro)) {
-                                    System.out.println(prof);
-                                    
-                                }
-                                
+                            if (centro.isEmpty()) {
+                                System.out.println("No hay ningún centro con ese nombre");
+                                return;
+                            }
+                            Centro c = centro.getFirst();
+                            for (Profesor p : c.getProfesores()) {
+                                System.out.println("\n" + p);
                             }
 
-                        
-                        }*/
-                        break;
+                            /*
+                             * profesores = odb.getObjects(Profesor.class); educCentros =
+                             * odb.getObjects(Centro.class); String centro = Leer.pedirCadena();
+                             * 
+                             * if (educCentros.isEmpty()) { System.out.println("Lo siento, no hay");
+                             * 
+                             * } for (Profesor prof : profesores) { for (Centro centrete : educCentros) { if
+                             * (centrete.getNombre_centro().equals(centro)) { System.out.println(prof);
+                             * 
+                             * }
+                             * 
+                             * }
+                             * 
+                             * 
+                             * }
+                             */
+                            break;
 
                         case 5:
-                        //Listar a todos los profesores de un centro cuya fechade nacimientos dea interior a 1993
-                        profesores = odb.getObjects(Profesor.class);
-                        educCentros = odb.getObjects(Centro.class);
+                            // Listar a todos los profesores de un centro cuya fechade nacimientos dea
+                            // interior a 1993
+                            profesores = odb.getObjects(Profesor.class);
+                            educCentros = odb.getObjects(Centro.class);
 
-                        if (profesores.isEmpty()) {
-                            System.out.println("Lo siento, no hay");
-                            
-                        } 
-                        for (Profesor prof : profesores) {
-                            String facha = prof.getNacimento_profesor();
-                            int anyo = Integer.parseInt(facha.substring(6,9));
-                            if(anyo<1993)
-                            {
-                                System.out.println(prof);
+                            if (profesores.isEmpty()) {
+                                System.out.println("Lo siento, no hay");
+
                             }
-                            
-                            
-                        }
+                            for (Profesor prof : profesores) {
+                                String facha = prof.getNacimento_profesor();
+                                int anyo = Integer.parseInt(facha.substring(6, 9));
+                                if (anyo < 1993) {
+                                    System.out.println(prof);
+                                }
+
+                            }
 
                             break;
 
                         case 6:
-                        //Listar los profesores con sexo masculino que impartan la asignatura de “Acceso a datos”.
+                            // Listar los profesores con sexo masculino que impartan la asignatura de
+                            // “Acceso a datos”.
 
                             odb.close();
 
@@ -193,10 +196,9 @@ public class App {
             System.err.println("Problema al conectar maño" + e.getMessage());
         }
 
-        
+    }
 
-
-
+    public void funcionNico(Profesor p) {
 
     }
 }

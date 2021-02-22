@@ -2,6 +2,8 @@ package Practica3_AD.Pricipales;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +17,7 @@ public class Centro {
     public String direccion_centro;
     public String localidad_centro;
     public String provincia_centro;
-    public ArrayList<Profesor> profesores;
+	public List<Profesor> profesores;
 
     public Centro() {
 
@@ -34,7 +36,7 @@ public class Centro {
     }
 
 	public Centro(int codigo_centro, String nombre_centro, String director_centro, String direccion_centro,
-			String localidad_centro, String provincia_centro, ArrayList<Profesor> profesores) {
+			String localidad_centro, String provincia_centro, List<Profesor> profesores) {
 		this.codigo_centro = codigo_centro;
 		this.nombre_centro = nombre_centro;
 		this.director_centro = director_centro;
@@ -92,11 +94,11 @@ public class Centro {
 		this.provincia_centro = provincia_centro;
 	}
 
-	public ArrayList<Profesor> getProfesores() {
+	public List<Profesor> getProfesores() {
 		return profesores;
 	}
 
-	public void setProfesores(ArrayList<Profesor> profesores) {
+	public void setProfesores(List<Profesor> profesores) {
 		this.profesores = profesores;
 	}
 
