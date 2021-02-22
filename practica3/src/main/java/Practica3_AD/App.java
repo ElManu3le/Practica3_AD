@@ -16,9 +16,12 @@ public class App {
 
     public static void main(String[] args) {
 
+        ODB odb = ODBFactory.open("test.neodatis");
+
         try {
 
-            ODB odb = ODBFactory.open("test.neodatis");
+            
+
             Objects<Centro> educCentros;
             Objects<Profesor> profesores;
             Objects<Asignatura> profMaterias;
@@ -27,7 +30,7 @@ public class App {
             Centro centros1 = new Centro(3, "IES ITACA", "MARCOS ", "CALLE MAYOR DE LOS CABALLEROS", "SANTA ISABEL", "ZARAGOZA");
             Centro centros2 = new Centro(4, "COLEGIO MIXTO Nº8", "JULIAN VAQUERIZO", "PLAZA DEL PILAR", "AZUCARERA", "MADRID");
 
-            Profesor docentes = new Profesor(11, "IGNACIO", "LACOSTE", "M", "1/04/1994");
+            Profesor docentes = new Profesor(11, "IGNACIO", "LACOSTE", "M", "1/04/1990");
             Profesor docentes1 = new Profesor(12, "MARCOS", "RUIZ", "M", "1/04/1970");
             Profesor docentes2 = new Profesor(20, "JULIAN", "VAQUERIZO", "M", "1/04/1965");
 
@@ -52,7 +55,7 @@ public class App {
 
                 System.out.println("4. Listar a todos los profesores de un centro");
 
-                System.out.println("5. Listar a todos los profesores de un centro cuya fechade nacimientos dea interior a 1993");
+                System.out.println("5. Listar a todos los profesores de un centro cuya fechade nacimientos dea anterior a 1993");
 
                 System.out.println("6. Listar los profesores con sexo masculino que impartan la asignatura de “Acceso a datos”.");
 
@@ -66,6 +69,8 @@ public class App {
                     switch (opcion = Leer.pedirEnteroValidar()) {
                         case 1:
                         //Añadir los datos a la BD
+
+                        
 
                             odb.store(centros);
                             odb.store(centros1);
@@ -85,6 +90,7 @@ public class App {
                             odb.store(materias8);
 
 
+                            
                             break;
 
                         case 2:
@@ -139,8 +145,8 @@ public class App {
                         } 
                         for (Profesor prof : profesores) {
                             String facha = prof.getNacimento_profesor();
-                            int anyo = Integer.parseInt(facha.substring(5,9));
-                            if(anyo<=1993)
+                            int anyo = Integer.parseInt(facha.substring(6,9));
+                            if(anyo<1993)
                             {
                                 System.out.println(prof);
                             }
@@ -153,7 +159,7 @@ public class App {
                         case 6:
                         //Listar los profesores con sexo masculino que impartan la asignatura de “Acceso a datos”.
 
-                            
+                            odb.close();
 
                             break;
 
